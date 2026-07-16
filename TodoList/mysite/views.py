@@ -1,27 +1,19 @@
 from django.http import HttpResponse
-from django.shortcuts import render
-from .forms import *
+from django.shortcuts import render,redirect
+from .forms import UserForm, BlogForm, CommentForm
 
 
-def index(request):
-    if request.method =="POST":
-        user = UserForm(request.POST)
-        if user.is_valid():
-            username = user.cleaned_data['username']
-            password = user.cleaned_data['password']
-            email = user.cleaned_data['email']
-            return HttpResponse(f"<h2>Привет {username} c почтой: {email}</h2>")
+def MainPage(request):
+    return render(request, 'MainPage.html')
+
+def registration(request):
+    if request.method == "POST":
+        userform = UserForm(request.POST)
+        if userform.is_valid():
+            userform.save()
+            return redirect('MainPage')
         else:
-            return HttpResponse("Invalid Data")
+            return HttpResponse("<h2>Данные некорректные!</h2>")
     else:
-        user = UserForm()
-        return render(request,'index.html',{'form':user})
-
-def about(request):
-    return render(request, 'about.html')
-
-def contact(request):
-    return render(request, 'contact.html')
-
-def task(request, id):
-    return HttpResponse(f"Задача {id}")
+        userform = UserForm()
+        return render(request,'registration.html',{"form":userform})
