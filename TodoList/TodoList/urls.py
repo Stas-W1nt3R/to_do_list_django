@@ -22,4 +22,5 @@ from mysite import views
 urlpatterns = [
     path("",views.MainPage, name='MainPage'),
     path('registration/', views.registration, name='registration'),
+    path('enter/', views.enter, name='enter'),
 ]
