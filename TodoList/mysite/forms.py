@@ -6,9 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ['title','description','date','user']
+        fields = ['title','description']
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['comment','user','blog','date']
+        fields = ['comment']

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница удаления</title>
+</head>
+<body>
+    <h2>Вы точно уверенны, что хотите удалить пост: {{blog.title}}</h2>
+
+    <form method="post" action="">
+        {%csrf_token%}
+        <button type="submit">Да, удалить</button>
+        <a href="{%url 'blog' blog.id%}">Отмена</a>
+    </form>
+</body>
+</html>

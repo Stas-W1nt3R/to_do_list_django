@@ -6,6 +6,19 @@
 </head>
 <body>
     <h2>Главная страница</h2>
-    <a href="enter/">Вход</a> | <a href="registration/">Регистрация</a>
+    {% if user.is_authenticated%}
+        <h2>Hello, {{user.username}}</h2>
+        <a href="create/">Создание блога</a> | <a href="exit/">Выйти</a>
+    {%else%}
+        <a href="enter/">Вход</a> | <a href="registration/">Регистрация</a>
+    {%endif%}
+
+    {% if blogs%}
+        {%for blog in blogs%}
+            <a href="{%url 'blog' blog.id%}"><h3>{{blog.title}}:</h3></a>
+            <p>{{blog.description}}</p>
+            <h4>Author: {{blog.user.username}}</h4><p>Data: {{blog.date}}</p>
+        {%endfor%}
+    {%endif%}
 </body>
 </html>

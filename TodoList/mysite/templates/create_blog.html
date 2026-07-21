@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница для создания поста</title>
+</head>
+<body>
+    <form method="post" action="">
+        {% csrf_token%}
+
+        {%if form.errors%}
+            <div style="color:red; border:1px solid red; padding:10px;">
+                <ul>
+                    {% for field, errors in form.errors%}
+                        <li><strong>{{field}}:</strong>{{errors|join:","}}</li>
+                    {%endfor%}
+                </ul>
+            </div>
+        {%endif%}
+
+        {{form}}
+        <input type="submit" value="Создать" />
+    </form>
+</body>
+</html>

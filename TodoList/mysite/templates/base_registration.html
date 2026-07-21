@@ -8,8 +8,20 @@
     <h2>{% block content %}{% endblock content %}</h2>
     <form method="post" action="">
         {% csrf_token %}
-        {% block form_fields %}
-        {% endblock %}
+
+        {%if forms.errors%}
+            <div style="color:red; border:1px solid red; padding:10px;">
+                <ul>
+                    {% for fields, errors in forms.errors%}
+                        <li>
+                            <strong>{{fields}}:</strong> {{errors|join:","}}
+                        </li>
+                    {%endfor%}
+                </ul>
+            </div>
+        {%endif%}
+
+        {% block form_fields %} {% endblock %}
         <input type="submit" value="Отправить" />
     </form>
 </body>

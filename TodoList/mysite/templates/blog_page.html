@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница блога</title>
+</head>
+<body>
+    <form method="post" action="">
+        {%csrf_token%}
+
+        {%if form.errors.items%}
+            <div style="color:red; border:1px solid red; padding:10px;">
+                <ul>
+                    {% for field, errors in form.errors%}
+                        <li><strong>{{field}}:</strong>{{errors|join:","}}</li>
+                    {%endfor%}
+                </ul>
+            </div>
+        {%endif%}
+
+        <h2>{{blog.title}}</h2>
+        <p>{{blog.description}}</p>
+        <h3>Author: {{blog.user.username}}</h3>
+        <p>{{blog.date}}</p>
+
+        {% if user == blog.user%}
+            <a href="{% url 'edit' blog.id %}">Изменить</a> | <a href="{% url 'delete' blog.id %}">Удалить</a>
+        {% endif%}
+
+        <h4>Комментарии:</h4>
+        {%for comment in blog.blog_comments.all%}
+            <p><strong>{{comment.user.username}}:</strong> {{comment.comment}}</p>
+            <p><small>{{ comment.date }}</small></p>
+        {%empty%}
+            <p>Комментариев пока нет</p>
+        {%endfor%}
+
+        {{form}}
+
+        <input type="submit" value="Отправить">
+    </form>
+</body>
+</html>

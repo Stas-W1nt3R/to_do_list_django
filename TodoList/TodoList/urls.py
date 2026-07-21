@@ -19,11 +19,14 @@ from django.contrib import admin
 from django.urls import path
 from mysite import views
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",views.MainPage, name='MainPage'),
-    path('registration/', views.registration, name='registration'),
-    path('enter/', views.enter, name='enter'),
-
+    path("",views.MainPage_view, name='MainPage'),
+    path('registration/', views.registration_view, name='registration'),
+    path('enter/', views.enter_view, name='enter'),
+    path('exit/', views.exit_view, name='exit'),
+    path('create/', views.create_blog_view, name='create'),
+    path('edit/<int:id>', views.update_blog_view, name='edit'),
+    path('blog/<int:id>', views.blog_view, name='blog'),
+    path('delete/<int:id>', views.delete_blog_view, name='delete'),
 ]
