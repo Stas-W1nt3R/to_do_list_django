@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Blog, Comment
+from .models import Blog, Comment, Profile
 from django.contrib.auth.forms import UserCreationForm
 
 class BlogForm(forms.ModelForm):
@@ -12,3 +12,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['comment']
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['avatar','bio']

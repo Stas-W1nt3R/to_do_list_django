@@ -31,3 +31,15 @@ class Comment(models.Model):
         ordering = ['-date']
         verbose_name='Комментарий'
         verbose_name_plural = 'Комментарии'
+
+class Profile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE, verbose_name="Пользователь", related_name="user_profile")
+    avatar = models.ImageField(blank=True,null=True,verbose_name="Аватар")
+    bio = models.TextField(blank=True,verbose_name="О себе")
+
+    def __str__(self):
+        return f"Профиль {self.user.username}"
+
+    class Meta:
+        db_table = 'profiles'
+        verbose_name='Профиль'

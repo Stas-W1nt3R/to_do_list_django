@@ -1,16 +1,22 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render,redirect, get_object_or_404
-from .forms import BlogForm, CommentForm
+from .forms import BlogForm, CommentForm, ProfileForm
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from django.core.paginator import Paginator
 
-from .models import Blog
+from .models import *
 
 
 def MainPage_view(request):
     blogs = Blog.objects.all()
+    paginator = Paginator(blogs, 3)
 
-    return render(request, 'MainPage.html', {'blogs':blogs})
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'MainPage.html', {'page_obj':page_obj})
 
 def registration_view(request):
     if request.method == "POST":
@@ -119,3 +125,34 @@ def delete_blog_view(request, id):
         return redirect('MainPage')
     else:
         return render(request,'delete_blog.html',{"blog":blog})
+
+def profile_view(request,id):
+    if request.user.is_authenticated:
+        profile_user = get_object_or_404(User, id=id)
+        return render(request,'profile.html',{'profile_user': profile_user})
+    else:
+        return redirect('enter')
+
+def profile_edit_view(request,id):
+    if request.user.is_authenticated:
+        if request.user.id == id:
+            user = get_object_or_404(User, id=id)
+            profile = Profile.objects.get(user=user)
+
+            if request.method == "POST":
+                form = ProfileForm(request.POST,request.FILES, instance=profile)
+                if form.is_valid():
+                    profile = form.save(commit=False)
+                    profile.user = request.user
+                    profile.save()
+                    return redirect('profile', id=id)
+                else:
+                    return HttpResponse(form.errors)
+
+            else:
+                form = ProfileForm(instance=profile)
+                return render(request,'profile_edit.html',{"form":form})
+        else:
+            return HttpResponse("У вас недостаточно прав для редактирования этой страницы!")
+    else:
+        return redirect('enter')

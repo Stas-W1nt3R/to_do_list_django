@@ -20,16 +20,18 @@
 
         <h2>{{blog.title}}</h2>
         <p>{{blog.description}}</p>
-        <h3>Author: {{blog.user.username}}</h3>
+        <h3>Author: <a href="{%url 'profile' blog.user.id%}">{{blog.user.username}}</a></h3>
         <p>{{blog.date}}</p>
 
         {% if user == blog.user%}
             <a href="{% url 'edit' blog.id %}">Изменить</a> | <a href="{% url 'delete' blog.id %}">Удалить</a>
         {% endif%}
 
+        <br><a href="/" style="display: inline-block; margin-top: 10px;">Вернуться на главную</a>
+
         <h4>Комментарии:</h4>
         {%for comment in blog.blog_comments.all%}
-            <p><strong>{{comment.user.username}}:</strong> {{comment.comment}}</p>
+            <p><strong><a href="{%url 'profile' comment.user.id%}">{{comment.user.username}}</a>:</strong> {{comment.comment}}</p>
             <p><small>{{ comment.date }}</small></p>
         {%empty%}
             <p>Комментариев пока нет</p>

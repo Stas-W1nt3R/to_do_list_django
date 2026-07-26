@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница профиля</title>
+</head>
+<body>
+    {%if form.errors%}
+            <div style="color:red; border:1px solid red; padding:10px;">
+                <ul>
+                    {% for fields, errors in form.errors%}
+                        <li>
+                            <strong>{{fields}}:</strong> {{errors|join:","}}
+                        </li>
+                    {%endfor%}
+                </ul>
+            </div>
+    {%endif%}
+
+    {%if user.is_authenticated%}
+        <h3>Профиль пользователя: {{profile_user.username}}</h3>
+
+        {% if profile_user.user_profile.avatar %}
+            <img src="{{profile_user.user_profile.avatar.url}}" alt="Аватар" width="150">
+        {%else%}
+            <p>Аватар не загружен</p>
+        {%endif%}
+
+        {% if profile_user.user_profile.bio %}
+            <h2>О себе:</h2>
+            <p>{{profile_user.user_profile.bio}}</p>
+        {%else%}
+            <p>О себе ничего не добавлено!</p>
+        {%endif%}
+
+        {% if profile_user == user%}
+            <a href="{%url 'profile_edit' profile_user.id%}">Изменить профиль</a>
+        {% endif%}
+    {%else%}
+        <h2>Вы не можете смотреть профили других пользователей пока вы не зарегестрированы!</h2>
+        <a href="enter/">Вход</a> | <a href="registration/">Регистрация</a>
+    {%endif%}
+</body>
+</html>

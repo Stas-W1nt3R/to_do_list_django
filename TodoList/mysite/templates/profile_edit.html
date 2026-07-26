@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница изменения профиля</title>
+</head>
+<body>
+    <form method="post" action="" enctype="multipart/form-data">
+        {%csrf_token%}
+        {%if form.errors%}
+            <div style="color:red; border:1px solid red; padding:10px;">
+                <ul>
+                    {% for fields, errors in form.errors%}
+                        <li>
+                            <strong>{{fields}}:</strong> {{errors|join:","}}
+                        </li>
+                    {%endfor%}
+                </ul>
+            </div>
+        {%endif%}
+
+        {{form.as_p}}
+        <input type="submit" value="Отправить" />
+    </form>
+</body>
+</html>
