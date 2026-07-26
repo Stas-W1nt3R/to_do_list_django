@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница поиска</title>
+</head>
+<body>
+    {% if results %}
+        {% for blog in results %}
+            <a href="{% url 'blog' blog.id %}"><h2>{{blog.title}}</h2></a>
+            <p>{{blog.description}}</p>
+        {% endfor %}
+    {% else %}
+        <p>По вашему запросу ничего не найдено!</p>
+    {% endif %}
+</body>
+</html>

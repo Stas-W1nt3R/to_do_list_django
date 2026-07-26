@@ -5,7 +5,7 @@ from .forms import BlogForm, CommentForm, ProfileForm
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator
-
+from django.db.models import Q
 from .models import *
 
 
@@ -156,3 +156,12 @@ def profile_edit_view(request,id):
             return HttpResponse("У вас недостаточно прав для редактирования этой страницы!")
     else:
         return redirect('enter')
+
+def blog_search(request):
+    query = request.GET.get('q')
+    results = []
+    if query:
+        results = Blog.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+    return render(request, 'blog_list.html', {'results':results})

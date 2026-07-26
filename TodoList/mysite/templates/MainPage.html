@@ -5,6 +5,11 @@
     <title>Главная страница</title>
 </head>
 <body>
+    <form method="get" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Поиск по блогам..." value="{{query}}"/>
+        <button type="submit">Найти</button>
+    </form>
+
     <h2>Главная страница</h2>
     {% if user.is_authenticated%}
         <h2>Hello, {{user.username}}</h2>

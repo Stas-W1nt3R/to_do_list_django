@@ -2,11 +2,23 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+        db_table = 'tag'
+
 class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь",related_name="blogs")
     title = models.CharField(max_length=20, verbose_name="Заголовок")
     description = models.TextField(verbose_name="Описание блога")
     date = models.DateField(auto_now_add=True,verbose_name="Дата создания")
+    tag = models.ManyToManyField(Tag, blank=True,verbose_name="Тег", related_name="blog_tags")
 
     def __str__(self):
         return self.title
@@ -43,3 +55,4 @@ class Profile(models.Model):
     class Meta:
         db_table = 'profiles'
         verbose_name='Профиль'
+
