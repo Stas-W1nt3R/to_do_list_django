@@ -7,6 +7,7 @@ class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ['title','description','tag']
+        widgets = {'tag':forms.CheckboxSelectMultiple(),}
 
 class CommentForm(forms.ModelForm):
     class Meta:

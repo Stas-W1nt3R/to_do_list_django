@@ -34,6 +34,7 @@ urlpatterns = [
     path('profile/<int:id>', views.profile_view, name='profile'),
     path('profile_edit/<int:id>', views.profile_edit_view, name='profile_edit'),
     path('search/', views.blog_search, name='search'),
+    path('tag/<slug:slug>', views.blog_tag_view, name='tag'),
 ]
 
 if settings.DEBUG:

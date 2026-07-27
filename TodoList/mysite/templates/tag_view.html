@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница тега</title>
+</head>
+<body>
+    <h2>Страница тега: {{tag}}</h2>
+    <h4>Названия блогов с тегом {{tag}}:</h4>
+    {% for blog in tag.blog_tags.all%}
+        <strong><a href="{% url 'blog' blog.id %}">{{blog.title}}</a></strong>
+        <p>{{blog.description}}</p>
+    {% empty %}
+        <p>Нет блогов с этим тегом</p>
+    {% endfor %}
+</body>
+</html>

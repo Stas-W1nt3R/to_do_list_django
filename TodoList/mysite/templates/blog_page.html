@@ -21,7 +21,19 @@
         <h2>{{blog.title}}</h2>
         <p>{{blog.description}}</p>
         <h3>Author: <a href="{%url 'profile' blog.user.id%}">{{blog.user.username}}</a></h3>
-        <p>Теги: {{blog.tag}}</p>
+
+        <p>
+            <strong>Теги:</strong>
+            {% if blog.tag.all %}
+                {% for tag in blog.tag.all %}
+                    <span><a href="{% url 'tag' tag.slug %}">#{{tag.name}}</a></span>
+                    {% if not forloop.last%} | {%endif%}
+                {% endfor %}
+            {%else%}
+                <p>Нет тегов</p>
+            {%endif%}
+        </p>
+
         <p>{{blog.date}}</p>
 
         {% if user == blog.user%}

@@ -165,3 +165,10 @@ def blog_search(request):
             Q(title__icontains=query) | Q(description__icontains=query)
         )
     return render(request, 'blog_list.html', {'results':results})
+
+def blog_tag_view(request, slug):
+    if request.user.is_authenticated:
+        tag = get_object_or_404(Tag, slug=slug)
+        return render(request,'tag_view.html',{'tag':tag})
+    else:
+        return redirect('enter')
