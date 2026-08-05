@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
+from django.urls import reverse
 from mysite.models import Blog, Tag, Comment, Profile
 
 
@@ -50,6 +51,10 @@ class BlogAPITests(APITestCase):
             username='apitest',
             password='testpass123'
         )
+        self.user2 = User.objects.create_user(
+            username='apitest2',
+            password='testpass1234'
+        )
         self.tag = Tag.objects.create(name='Django', slug='django')
         self.blog = Blog.objects.create(
             user=self.user,
@@ -57,6 +62,25 @@ class BlogAPITests(APITestCase):
             description='API Desc'
         )
         self.blog.tag.add(self.tag)
+
+    def test_create_user(self):
+        response = self.client.post('/registration/', data={
+            'username': 'testuser2',
+            'password1': 'MyStr0ng!Pass#2024',
+            'password2': 'MyStr0ng!Pass#2024',
+        })
+
+        self.assertEqual(response.status_code, 302)
+
+
+    def test_delete_blog_by_non_author(self):
+        self.client.force_login(self.user2)
+        url = reverse('delete', args=[self.blog.id])
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("недостаточно прав", response.content.decode())
+        self.assertTrue(Blog.objects.filter(id=self.blog.id).exists())
 
     def test_get_blog_list(self):
         response = self.client.get('/api/blogs/')
