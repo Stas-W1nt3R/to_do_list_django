@@ -25,28 +25,28 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from mysite.views import UserViewSet, BlogViewSet, TagViewSet, CommentViewSet
 
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'blogs', BlogViewSet)
-router.register(r'tags', TagViewSet)
-router.register(r'comments', CommentViewSet)
+router.register(r"users", UserViewSet)
+router.register(r"blogs", BlogViewSet)
+router.register(r"tags", TagViewSet)
+router.register(r"comments", CommentViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("",views.MainPage_view, name='MainPage'),
-    path('registration/', views.registration_view, name='registration'),
-    path('enter/', views.enter_view, name='enter'),
-    path('exit/', views.exit_view, name='exit'),
-    path('create/', views.create_blog_view, name='create'),
-    path('edit/<int:id>', views.update_blog_view, name='edit'),
-    path('blog/<int:id>', views.blog_view, name='blog'),
-    path('delete/<int:id>', views.delete_blog_view, name='delete'),
-    path('profile/<int:id>', views.profile_view, name='profile'),
-    path('profile_edit/<int:id>', views.profile_edit_view, name='profile_edit'),
-    path('search/', views.blog_search, name='search'),
-    path('tag/<slug:slug>', views.blog_tag_view, name='tag'),
-    path('api/', include(router.urls)),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path("admin/", admin.site.urls),
+    path("", views.MainPage_view, name="MainPage"),
+    path("registration/", views.registration_view, name="registration"),
+    path("enter/", views.enter_view, name="enter"),
+    path("exit/", views.exit_view, name="exit"),
+    path("create/", views.create_blog_view, name="create"),
+    path("edit/<int:id>", views.update_blog_view, name="edit"),
+    path("blog/<int:id>", views.blog_view, name="blog"),
+    path("delete/<int:id>", views.delete_blog_view, name="delete"),
+    path("profile/<int:id>", views.profile_view, name="profile"),
+    path("profile_edit/<int:id>", views.profile_edit_view, name="profile_edit"),
+    path("search/", views.blog_search, name="search"),
+    path("tag/<slug:slug>", views.blog_tag_view, name="tag"),
+    path("api/", include(router.urls)),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
 
 if settings.DEBUG:
