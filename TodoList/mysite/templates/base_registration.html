@@ -9,7 +9,7 @@
     <form method="post" action="">
         {% csrf_token %}
 
-        {%if forms.errors%}
+        {%if forms.errors %}
             <div style="color:red; border:1px solid red; padding:10px;">
                 <ul>
                     {% for fields, errors in forms.errors%}
