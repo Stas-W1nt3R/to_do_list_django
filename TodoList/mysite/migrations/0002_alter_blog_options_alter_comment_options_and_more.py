@@ -8,57 +8,80 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mysite', '0001_initial'),
+        ("mysite", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='blog',
-            options={'ordering': ['-date'], 'verbose_name': 'Блог', 'verbose_name_plural': 'Блоги'},
+            name="blog",
+            options={
+                "ordering": ["-date"],
+                "verbose_name": "Блог",
+                "verbose_name_plural": "Блоги",
+            },
         ),
         migrations.AlterModelOptions(
-            name='comment',
-            options={'ordering': ['-date'], 'verbose_name': 'Комментарий', 'verbose_name_plural': 'Комментарии'},
+            name="comment",
+            options={
+                "ordering": ["-date"],
+                "verbose_name": "Комментарий",
+                "verbose_name_plural": "Комментарии",
+            },
         ),
         migrations.AlterField(
-            model_name='blog',
-            name='date',
-            field=models.DateField(verbose_name='Дата создания'),
+            model_name="blog",
+            name="date",
+            field=models.DateField(verbose_name="Дата создания"),
         ),
         migrations.AlterField(
-            model_name='blog',
-            name='description',
-            field=models.TextField(verbose_name='Описание блога'),
+            model_name="blog",
+            name="description",
+            field=models.TextField(verbose_name="Описание блога"),
         ),
         migrations.AlterField(
-            model_name='blog',
-            name='title',
-            field=models.CharField(max_length=20, verbose_name='Заголовок'),
+            model_name="blog",
+            name="title",
+            field=models.CharField(max_length=20, verbose_name="Заголовок"),
         ),
         migrations.AlterField(
-            model_name='blog',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blogs', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            model_name="blog",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="blogs",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Пользователь",
+            ),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='blog',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blog_comments', to='mysite.blog', verbose_name='Блог'),
+            model_name="comment",
+            name="blog",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="blog_comments",
+                to="mysite.blog",
+                verbose_name="Блог",
+            ),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='comment',
-            field=models.TextField(verbose_name='Комментарий'),
+            model_name="comment",
+            name="comment",
+            field=models.TextField(verbose_name="Комментарий"),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='date',
-            field=models.DateField(verbose_name='Дата создания'),
+            model_name="comment",
+            name="date",
+            field=models.DateField(verbose_name="Дата создания"),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_comments', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            model_name="comment",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="user_comments",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Пользователь",
+            ),
         ),
     ]

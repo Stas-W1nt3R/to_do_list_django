@@ -16,7 +16,7 @@ from .permissions import IsAuthorOrReadOnly
 class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all().order_by("date")
     serializer_class = BlogSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly,IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -31,7 +31,7 @@ class BlogViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all().order_by("date")
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly,IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

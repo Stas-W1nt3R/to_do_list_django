@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from mysite.api import UserViewSet, BlogViewSet, TagViewSet, CommentViewSet
-from drf_spectacular.views import SpectacularAPIView,SpectacularSwaggerView
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 router = DefaultRouter()
 router.register(r"users", UserViewSet)
@@ -32,9 +32,12 @@ router.register(r"tags", TagViewSet)
 router.register(r"comments", CommentViewSet)
 
 urlpatterns = [
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/',SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/docs/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
     path("admin/", admin.site.urls),
     path("", views.MainPage_view, name="MainPage"),
     path("registration/", views.registration_view, name="registration"),

@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import Blog, Comment, Tag, Profile
+from .models import Blog, Tag, Profile
 
 
 def MainPage_view(request):

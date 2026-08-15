@@ -1,9 +1,45 @@
 # TodoList (Django Blog)
 
-## Установка
+Полноценный блог-платформ с веб-интерфейсом и REST API. Пользователи могут создавать посты, добавлять теги, оставлять комментарии, редактировать профиль с аватаркой. Реализована JWT-аутентификация, поиск по постам, пагинация и автоматическое создание профиля при регистрации.
+
+## Стек технологий
+
+- **Backend:** Django 6.0, Django REST Framework, SimpleJWT
+- **Database:** PostgreSQL
+- **DevOps:** Docker, Docker Compose
+- **Code Quality:** flake8
+- **API Docs:** drf-spectacular (Swagger/OpenAPI)
+
+## Скриншоты
+
+### Главная страница
+![Главная страница](screenshots/main.png)
+### Swagger UI 
+![Swagger UI](screenshots/swagger1.png)
+### Swagger UI 
+![Swagger UI](screenshots/swagger2.png)
+
+## Быстрый старт (Docker)
+
 ```bash
-git clone ...
+git clone https://github.com/Stas-W1nt3R/to_do_list_django.git
 cd to_do_list_django/TodoList
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+cp .env.example .env
+docker-compose up --build
+```
+
+## Endpoints
+| Endpoint              | Method           | Auth    | Описание                              |
+| --------------------- | ---------------- | ------- | ------------------------------------- |
+| `/api/blogs/`         | GET/POST         | Нет/JWT | Список/создание блогов                |
+| `/api/blogs/<id>/`    | GET/PATCH/DELETE | Нет/JWT | Детали/редакт/удаление (только автор) |
+| `/api/blogs/latest/`  | GET              | Нет     | 3 последних блога                     |
+| `/api/tags/`          | GET/POST         | Нет/JWT | Теги                                  |
+| `/api/comments/`      | GET/POST         | Нет/JWT | Комментарии                           |
+| `/api/token/`         | POST             | Нет     | Получить JWT                          |
+| `/api/token/refresh/` | POST             | Нет     | Обновить JWT                          |
+
+## Тесты
+```bash
+docker-compose exec web python manage.py test
+```
