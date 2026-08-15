@@ -28,6 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 INSTALLED_APPS = [
     "mysite",
     "rest_framework",
+    "drf_spectacular",
     "rest_framework_simplejwt",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -70,6 +71,7 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 WSGI_APPLICATION = "TodoList.wsgi.application"
