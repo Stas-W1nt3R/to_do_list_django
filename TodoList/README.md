@@ -7,7 +7,7 @@
 - **Backend:** Django 6.0, Django REST Framework, SimpleJWT
 - **Database:** PostgreSQL
 - **DevOps:** Docker, Docker Compose
-- **Code Quality:** flake8
+- **Code Quality:** flake8, black
 - **API Docs:** drf-spectacular (Swagger/OpenAPI)
 
 ## Скриншоты
