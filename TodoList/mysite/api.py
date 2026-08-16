@@ -6,10 +6,10 @@ from .serializers import (
     TagSerializer,
     UserSerializer,
 )
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .permissions import IsAuthorOrReadOnly
 
 
@@ -26,6 +26,27 @@ class BlogViewSet(viewsets.ModelViewSet):
         blogs = Blog.objects.all().order_by("-date")[:3]
         serializer = BlogSerializer(blogs, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated], description="Возвращает все блоги пользователя")
+    def my_blogs(self,request):
+        blogs = Blog.objects.filter(user=self.request.user)
+        serializer = BlogSerializer(blogs, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True,methods=["get", "post"], permission_classes=[IsAuthenticatedOrReadOnly], description="Комментарии к блогу")
+    def comments(self,request,pk=None):
+        blog = self.get_object()
+
+        if request.method == "GET":
+            comments = Comment.objects.filter(blog=blog)
+            serializer = CommentSerializer(comments, many=True)
+            return Response(serializer.data)
+
+        elif request.method == "POST":
+            serializer = CommentSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save(user=request.user, blog=blog)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CommentViewSet(viewsets.ModelViewSet):

@@ -26,8 +26,6 @@ class CommentSerializer(serializers.ModelSerializer):
 class BlogSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     tag = serializers.PrimaryKeyRelatedField(many=True, queryset = Tag.objects.all(), required=False)
-    class Meta:
-        model = Blog
     comment = CommentSerializer(many=True, read_only=True)
 
     class Meta:
