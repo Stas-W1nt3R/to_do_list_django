@@ -6,7 +6,7 @@ from .serializers import (
     TagSerializer,
     UserSerializer,
 )
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
@@ -17,6 +17,13 @@ class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all().order_by("date")
     serializer_class = BlogSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+
+    def get_queryset(self):
+        queryset = Blog.objects.all()
+        tag = self.request.query_params.get("tag")
+        if tag:
+            queryset = queryset.filter(tag__slug=tag)
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
