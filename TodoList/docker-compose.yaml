@@ -10,6 +10,11 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
   web:
     build: .
     command: >
@@ -21,13 +26,32 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
     environment:
       - DB_HOST=db
       - DB_NAME=ToDoList_db
       - DB_USER=postgres
       - DB_PASSWORD=kondratiev
       - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379/0
       - SECRET_KEY=django-insecure-dev-key-change-in-production
+
+  celery_worker:
+    build: .
+    command: celery -A TodoList worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DB_HOST=db
+      - DB_NAME=TodoList_db
+      - DB_USER=postgres
+      - DB_PASSWORD=kondratiev
+      - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=django-insecure-dev-key
 
 volumes:
   postgres_data:
