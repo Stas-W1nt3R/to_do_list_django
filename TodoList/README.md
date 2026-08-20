@@ -7,8 +7,10 @@
 - **Backend:** Django 6.0, Django REST Framework, SimpleJWT
 - **Database:** PostgreSQL
 - **DevOps:** Docker, Docker Compose
-- **Code Quality:** flake8, black
+- **Code Quality:** flake8
 - **API Docs:** drf-spectacular (Swagger/OpenAPI)
+- **Redis:** redis 8.1.0
+- **Celery:** Celery 5.6.3
 
 ## Скриншоты
 
@@ -30,7 +32,7 @@ docker-compose up --build
 
 ## Endpoints
 | Endpoint              | Method           | Auth    | Описание                              |
-| --------------------- | ---------------- | ------- | ------------------------------------- |
+| --------------------- | ---------------- | ------- |---------------------------------------|
 | `/api/blogs/`         | GET/POST         | Нет/JWT | Список/создание блогов                |
 | `/api/blogs/<id>/`    | GET/PATCH/DELETE | Нет/JWT | Детали/редакт/удаление (только автор) |
 | `/api/blogs/latest/`  | GET              | Нет     | 3 последних блога                     |
@@ -38,6 +40,14 @@ docker-compose up --build
 | `/api/comments/`      | GET/POST         | Нет/JWT | Комментарии                           |
 | `/api/token/`         | POST             | Нет     | Получить JWT                          |
 | `/api/token/refresh/` | POST             | Нет     | Обновить JWT                          |
+| `/api/blogs/<id>/comments/` | GET/POST | Нет/JWT | Комментарии к блогу                   |
+| `/api/blogs/my_blogs/` | GET | JWT | Блоги текущего пользователя           |
+
+## Фоновые задачи (Celery + Redis)
+
+- Redis используется как брокер сообщений для Celery
+- Celery worker запускается в отдельном Docker-контейнере
+- Пример задачи: отправка уведомлений (заглушка, расширяется под реальные сценарии)
 
 ## Тесты
 ```bash
